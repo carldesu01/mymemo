@@ -4,8 +4,9 @@
 
     
     <!-- tagsの表示 -->
-            
+    
     <div>
+    タグでソート：
         @foreach($taglists as $post)
             <a href="{{ route('tags',['tags' => $post->tags ])}}">{{ $post->tags }}</a>
         @endforeach        
