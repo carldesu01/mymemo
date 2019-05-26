@@ -1,1 +1,1 @@
-web: vender/bin/heroku-php-apach2
+web: $(composer config bin-dir)/heroku-php-apach2 public/
