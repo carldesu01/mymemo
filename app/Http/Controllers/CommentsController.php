@@ -24,6 +24,13 @@ class CommentsController extends Controller
     
     public function destroy($id)
     {
+        
+        
+        $post_id = Comment::select('post_id') -> where('id','like',$id) -> get();
+        //$idから$post_idを抽出したい
+        
+        
+        
         $comment = Comment::findOrFail($id); //削除するコメントを選択
         
         \DB::transaction(function ()use($comment){
@@ -31,11 +38,11 @@ class CommentsController extends Controller
         });
         
        
-        
-        
-        $post_id = Comment::select('post_id') -> where('id','like',$id) -> get(); //$idから$post_idを抽出したい
-        $post = Post::findOrFail($post_id);
-        
-        return redirect()->route('posts.show', ['post' => $post]);
+        $post = Post::findOrFail($post_id); 
+        $lists = Post::orderBy('created_at', 'desc') -> get();
+        return view('posts.show', [
+            'post' => $post,
+            'lists' => $lists
+        ]);
     }
 }
