@@ -33,7 +33,7 @@ class CommentsController extends Controller
        
         
         
-        $post_id = Comment::select('post_id') -> where('id','like','$id') -> get(); //$idから$post_idを抽出したい
+        $post_id = Comment::select('post_id') -> where('id','like',$id) -> get(); //$idから$post_idを抽出したい
         $post = Post::findOrFail($post_id);
         
         return redirect()->route('posts.show', ['post' => $post]);
