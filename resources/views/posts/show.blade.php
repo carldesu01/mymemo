@@ -42,9 +42,25 @@
                             {!! nl2br(e($comment->body)) !!}
                         </p>
                         </pre>
+                        
+                        <p>
+                            @if ($comment->url)
+                                参考：<a href="{{ $comment->url }}">{{ $comment->url }}</a>
+                            @endif
+                        </p>
                         <time class="text-secondary">
                             {{ $comment->created_at->format('Y.m.d H:i') }}
                         </time>
+                        <form 
+                              style="display: inline-block;"
+                              method="POST"
+                              action="{{ route('comments.destroy', ['comment' => $comment]) }}"
+                              >
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-dell btn-sm">追記削除</button>
+                        </form>
+                        
                     </div>
                 @empty
                     <p>追記事項はまだありません。</p>
@@ -60,19 +76,32 @@
                     >
                     
                     <div class="form-group">
-                        <lavel for="body">
-                            追記する
-                        </lavel>
                         <textarea
                                   id="body"
                                   name="body"
                                   class="form-control {{ $errors->has('body') ? 'is-invlid' : '' }}"
                                   rows="4"
+                                  placeholder="追記する"
                         >{{ old('body') }}</textarea>
                         
                         @if ($errors->has('body'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('body') }}
+                            </div>
+                        @endif
+                        
+                        <input 
+                               type="text"
+                               id="url"
+                               name="url"
+                               class="form-control {{ $errors->has('url') ? 'is-invlid' : '' }}"
+                               rows="4"
+                               placeholder="参考サイト"
+                        >{{ old('url') }}
+                        
+                        @if ($errors->has('url'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('url') }}
                             </div>
                         @endif
                     </div>
