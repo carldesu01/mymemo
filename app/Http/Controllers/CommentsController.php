@@ -24,12 +24,18 @@ class CommentsController extends Controller
     
     public function destroy($id)
     {
-        $comment = Comment::findOrFail($id);
+        $comment = Comment::findOrFail($id); //削除するコメントを選択
         
         \DB::transaction(function ()use($comment){
             $comment->delete();
         });
         
-        return redirect()->route('top');
+       
+        
+        
+        $post_id = Comment::select('post_id') -> where('id','like','$id') -> get(); //$idから$post_idを抽出したい
+        $post = Post::findOrFail($post_id);
+        
+        return redirect()->route('posts.show', ['post' => $post]);
     }
 }
