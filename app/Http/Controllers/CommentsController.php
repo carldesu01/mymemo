@@ -25,8 +25,8 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         
-        
-        $post_id = Comment::select('post_id') -> where('id','like',$id) -> get();
+        // $postがうまく取得できていない？一旦保留でtopにリダイレクトさせる
+        //$post_id = Comment::select('post_id') -> where('id','like',$id) -> get();
         //$idから$post_idを抽出したい
         
         
@@ -38,11 +38,12 @@ class CommentsController extends Controller
         });
         
        
-        $post = Post::findOrFail($post_id); 
-        $lists = Post::orderBy('created_at', 'desc') -> get();
-        return view('posts.show', [
-            'post' => $post,
-            'lists' => $lists
-        ]);
+        //$post = Post::findOrFail($post_id); 
+        //$lists = Post::orderBy('created_at', 'desc') -> get();
+        //return view('posts.show', [
+        //    'post' => $post,
+        //    'lists' => $lists
+        //]);
+        return redirect()->route('top');
     }
 }
