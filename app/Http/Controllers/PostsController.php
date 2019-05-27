@@ -14,7 +14,7 @@ class PostsController extends Controller
         $lists = Post::orderBy('created_at', 'desc') -> get();
         
         //タグ表示用に$tagsにタグ一覧を格納
-        $taglists = Post::groupBy('tags') -> get();
+        $taglists = Post::select('tags') -> groupBy('tags') -> get();
         
         //検索用キーワード受け取り
         $keyword = $rq->input('keyword');
